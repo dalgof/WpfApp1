@@ -1,0 +1,100 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:b="clr-namespace:WpfApp1.Behaviors"
+        
+        xmlns:v="clr-namespace:WpfApp1.ValidationRules"
+        
+        xmlns:i1="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic.Core"
+        Title="MainWindow" Height="450" Width="800" Background="LightGray" Icon="/WpfApp1;component/Resources/shape.ico">
+    <Window.Resources>
+        <Style x:Key="InputErrorStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="Validation.HasError" Value="True"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <ToolTip DataContext="{Binding PlacementTarget,RelativeSource= {RelativeSource Self}}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding (Validation.Errors)[0].ErrorContent}"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <!--<Image Source="Resources/shape.ico" Height="200" Width="200" Margin="300,117,300,82" />-->
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.RowSpan="2">
+
+            <TextBox Height="30" Width="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" BorderBrush="White" BorderThickness="2" Margin="5,0,0,0" MaxLength="3" TextChanged="Textbox_TextChanged" Validation.ErrorTemplate="{StaticResource ValidationTemplate}">
+                
+                <i:Interaction.Behaviors>
+                    <b:TextBoxMoveFocus />
+                    <b:TextBoxMoveFocus_textinput/>
+                </i:Interaction.Behaviors>
+                
+                <TextBox.Text>
+                    <Binding Path="Num1">
+                        <Binding.ValidationRules>
+                            <v:NumberValidationRule MinValue="1" MaxValue="255"/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+                
+            </TextBox>
+
+                <TextBlock Background="white" Height="30" FontSize="24" Text="."/>
+
+            <TextBox Height="30" Width="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" BorderBrush="White" BorderThickness="2" MaxLength="3">
+                <i:Interaction.Behaviors>
+                    <b:TextBoxMoveFocus />
+                    <b:TextBoxMoveFocus_textinput/>
+                </i:Interaction.Behaviors>
+
+            </TextBox>
+
+            <TextBlock Background="White" Height="30" FontSize="24" Text="."/>
+
+            <TextBox Height="30" Width="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" BorderBrush="White" BorderThickness="2" MaxLength="3" >
+                <i:Interaction.Behaviors>
+                    <b:TextBoxMoveFocus />
+                    <b:TextBoxMoveFocus_textinput/>
+
+                </i:Interaction.Behaviors>
+
+            </TextBox>
+
+            <TextBlock Background="White" Height="30" FontSize="24" Text="."/>
+
+            <TextBox Height="30" Width="100" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" BorderBrush="White" BorderThickness="2" Margin="0,0,10,0" MaxLength="3">
+                <i:Interaction.Behaviors>
+                    <b:TextBoxMoveFocus />
+                    <b:TextBoxMoveFocus_textinput/>
+
+                </i:Interaction.Behaviors>
+
+            </TextBox>
+
+
+        </StackPanel>
+
+        <TextBox Background="DarkOliveGreen" Width="200" Height="30" Margin="300,302,300,67" FontSize="24" Name="MainText" Focusable="False"/>
+
+        <Button Height="50" Margin="350,367,0,17" Background="Black" Click="ButtonClick" Grid.RowSpan="2" HorizontalAlignment="Left" Width="100" />
+    </Grid>
+</Window>
